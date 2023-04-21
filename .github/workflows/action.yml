@@ -27,10 +27,11 @@ jobs:
     - name: Build
       run: npm run build
 
-    - name: Deploy
-      if: success()
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: dist/etokan-lib
-        enable_jekyll: true
+    - name: Build
+      run: npm run build
+
+    - name: Publish package on NPM 📦
+      run: npm publish
+      working-directory: ./dist/etokan-lib
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

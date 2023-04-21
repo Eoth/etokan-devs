@@ -1,3 +1,4 @@
+export type Bean = Record<string, unknown>;
 
 /**
  * Space to Object Util
@@ -55,5 +56,4 @@ function exist<T>(value: T | undefined): value is NonNullable<T> {
     return value !== undefined && value !== null;
 }
 
-type Bean = Record<string, unknown>;
 
