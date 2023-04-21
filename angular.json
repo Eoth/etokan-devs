@@ -33,11 +33,23 @@
               "zone.js/testing"
             ]
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/etokan-lib/**/*.ts",
+              "projects/etokan-lib/**/*.html"
+            ]
+          }
         }
       }
     }
   },
   "cli": {
-    "analytics": "c10d3cb7-533d-4c2e-9718-9b6cc012c9f1"
+    "analytics": "c10d3cb7-533d-4c2e-9718-9b6cc012c9f1",
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   }
 }

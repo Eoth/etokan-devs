@@ -1,6 +1,3 @@
-function exist<T>(value: T | undefined): value is T {
-    return value !== undefined && value !== null;
-}
 
 /**
  * Space to Object Util
@@ -13,7 +10,7 @@ export class ObjectU {
      * @param value to check
      * @returns true if exist
      */
-    static exist<T>(value: T | undefined): value is T {
+    static exist<T>(value: T | undefined): value is NonNullable<T> {
         return exist(value);
     }
 
@@ -48,10 +45,15 @@ export class ObjectU {
      * @param fieldName 
      * @returns 
      */
-    static getValueOn<T extends Object>(object: T, fieldName: string): any {
-        //@ts-ignore
-        return object[fieldName];
+    static getValueOn<T extends object>(bean: T, fieldName: string): unknown {
+        return (bean as Bean)[fieldName];
     }
 
 }
+
+function exist<T>(value: T | undefined): value is NonNullable<T> {
+    return value !== undefined && value !== null;
+}
+
+type Bean = Record<string, unknown>;
 
