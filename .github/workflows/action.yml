@@ -26,10 +26,6 @@ jobs:
 
     - name: Build
       run: npm run build
-    
-    - name: Init publish
-      run: npm adduser
-      working-directory: dist/etokan-lib
 
     - name: Publish package on NPM 📦
       run: npm publish --regsitry=https://www.npmjs.com --userconfig=./.npmrc
