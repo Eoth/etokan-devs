@@ -29,6 +29,8 @@ jobs:
 
     - name: add user publish
       run: npm adduser
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
     - name: Publish package on NPM 📦
       run: npm publish
