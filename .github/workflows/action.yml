@@ -26,7 +26,11 @@ jobs:
 
     - name: Build
       run: npm run build
-
+    
+    - name: Init publish
+      run: npm init
+      working-directory: dist/etokan-lib
+      
     - name: Publish package on NPM 📦
       run: npm publish
       working-directory: dist/etokan-lib
