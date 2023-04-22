@@ -27,13 +27,8 @@ jobs:
     - name: Build
       run: npm run build
 
-    - name: Publish Prepare
-      run: npm adduser
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
     - name: Publish package on NPM 📦
       run: npm publish
-      working-directory: ./dist/etokan-lib
+      working-directory: .\dist\etokan-lib
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
