@@ -27,7 +27,7 @@ jobs:
     - name: Build
       run: npm run build
 
-    - name: Build
+    - name: add user publish
       run: npm adduser
 
     - name: Publish package on NPM 📦
