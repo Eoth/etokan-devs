@@ -28,7 +28,7 @@ jobs:
       run: npm run build
 
     - name: Publish package on NPM 📦
-      run: npm publish --regsitry=https://registry.npmjs.org/ --userconfig=./.npmrc
+      run: npm publish 
       working-directory: dist/etokan-lib
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
