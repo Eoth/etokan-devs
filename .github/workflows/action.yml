@@ -28,8 +28,13 @@ jobs:
     - name: Build
       run: npm run build
 
+    - name: add npm user
+      run: npm adduser
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
     - name: Publish 
-      run: npm publish --access public
+      run: npm publish
       working-directory: dist/etokan-lib
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
