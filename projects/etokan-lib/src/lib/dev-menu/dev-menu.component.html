@@ -1,0 +1,5 @@
+<ul>
+    <li *ngfor="let config of this.router.config">
+        <a [href]="config.path">{{config.path}}</a>
+    </li>
+</ul>
