@@ -3,13 +3,16 @@ import { CommonModule } from '@angular/common';
 import { DevMenuComponent } from './dev-menu.component';
 
 
-
 @NgModule({
   declarations: [
     DevMenuComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    DevMenuComponent
+  ],
+  exports:[
+    DevMenuComponent
   ]
 })
 export class DevMenuModule { }
