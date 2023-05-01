@@ -5,7 +5,7 @@ import { ObjectU } from "./object-util";
 type FieldOperator = 'INCLUDE' | 'EXCLUDE';
 type InitValidator = 'REQUIRED' | 'OPTIONAL';
 
-class FieldsOptions {
+export class FieldsOptions {
   fieldsNames: string[] = [];
   operator: FieldOperator = 'EXCLUDE';
   constructor(fieldNames: string[], operator: FieldOperator) {
@@ -14,7 +14,7 @@ class FieldsOptions {
   }
 }
 
-export class Optional<T extends Bean> {
+export class Optional<T extends object> {
   initBean: T | undefined = undefined;
   fieldsOptions: FieldsOptions = new FieldsOptions([], 'EXCLUDE');
   nonRequiredField: string[] = [];
@@ -30,7 +30,13 @@ export class Optional<T extends Bean> {
  */
 export class FormU {
 
-  static classToFormGroup<T extends Bean>(clazz: Class<T>, optional?: Optional<T>): FormGroup {
+  /**
+   * 
+   * @param clazz 
+   * @param optional 
+   * @returns 
+   */
+  static createFormGroupFrom<T extends object>(clazz: Class<T>, optional?: Optional<T>): FormGroup {
     const bean: T = ObjectU.orElse(optional?.initBean, new clazz());
     const formgroup = new FormGroup({});
     const fieldsNames: Array<string> = Object.keys(bean);
@@ -51,12 +57,13 @@ export class FormU {
 }
 
 function choicePredicateToApply(fieldsOptions: FieldsOptions): Function1<string, boolean> {
+  const fieldsNames = fieldsOptions.fieldsNames;
   return fieldsOptions.operator === 'INCLUDE'
-    ? s => fieldsOptions.fieldsNames.includes(s)
-    : s => !fieldsOptions.fieldsNames.includes(s);
+    ? s => fieldsNames.includes(s)
+    : s => !fieldsNames.includes(s);
 }
 
-function applyOptionBeforAddControl<T extends Bean>(
+function applyOptionBeforAddControl<T extends object>(
   formgroup: FormGroup, name: string, optional: Optional<T>,
   bean: T, predicate: Function1<string, boolean>
 ) {
@@ -66,11 +73,15 @@ function applyOptionBeforAddControl<T extends Bean>(
   }
 }
 
-function addControl<T extends Bean>(
-  formgroup: FormGroup, bean: T, name: string, required: InitValidator
+function addControl<T extends object>(
+  formgroup: FormGroup, bean: T, name: string, validator: InitValidator
 ) {
-  const control: FormControl = new FormControl(bean[name]);
-  if (required == 'REQUIRED') control.addValidators(Validators.required);
-  formgroup.addControl(name, control);
+  let control = null;
+  if (validator === 'REQUIRED') { 
+     control = new FormControl((bean as Bean)[name], Validators.required);
+  } else {
+    control =  new FormControl((bean as Bean)[name]);
+  }
+  formgroup.addControl(name, control); 
 }
 
