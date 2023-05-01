@@ -46,8 +46,8 @@ export class ObjectU {
      * @param fieldName 
      * @returns 
      */
-    static getValueOn<T extends Bean>(bean: T, fieldName: string): unknown {
-        return bean[fieldName];
+    static getValueOn<T extends object>(bean: T, fieldName: string): unknown {
+        return (bean as Bean)[fieldName];
     }
 
     /**
@@ -57,19 +57,8 @@ export class ObjectU {
      * @param fieldName to set value
      * @param value value to set
      */
-    static setValueOn<T extends Bean>(bean: T, fieldName: string, value: any): void {
+    static setValueOn<T extends object>(bean: T, fieldName: string, value: unknown): void {
         (bean as Bean)[fieldName] = value;
-    }
-
-
-    /**
-     * get Bean properties
-     * 
-     * @param instance 
-     * @returns 
-     */
-    static describe<T extends Bean>(instance: T): Array<string> {
-        return Object.getOwnPropertyNames(instance);
     }
 
     /**
@@ -79,10 +68,10 @@ export class ObjectU {
      * @returns 
      */
     static toKeyValue(array: Array<string>): { [K in string]: K } {
-        return array.reduce((res: Bean, key: string) => {
-            res[key] = key;
+        return array.reduce((res, key: string) => {
+            (res as Bean)[key] = key;
             return res;
-        }, Object.create(null));
+        }, {});
     }
 
     /**
