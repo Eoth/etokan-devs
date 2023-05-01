@@ -4,4 +4,4 @@
 
 export * from './lib/etokan-lib.component';
 export * from './lib/etokan-lib.module';
-export * from './lib/util'
+export * from './lib/util';

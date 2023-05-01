@@ -34,10 +34,16 @@ describe('ObjectU', () => {
     });
 
     it('getValueOn should return hakimi', () => {
+        goat.achraf = 'hakimi';
         expect(ObjectU.getValueOn(goat, 'achraf')).toEqual('hakimi');
     });
 
     it('getValueOn should return undefined', () => {
         expect(ObjectU.getValueOn(goat, 'none')).toBeUndefined();
+    });
+
+    it('setValueOn should set value on', () => {
+        ObjectU.setValueOn(goat, 'achraf', 'testSetValue');
+        expect(goat.achraf).toEqual('testSetValue');
     });
 })

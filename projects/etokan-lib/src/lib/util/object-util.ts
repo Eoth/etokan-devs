@@ -1,4 +1,4 @@
-export type Bean = Record<string, unknown>;
+import { Bean, PropertyRecord } from "./custom-type";
 
 /**
  * Space to Object Util
@@ -46,8 +46,53 @@ export class ObjectU {
      * @param fieldName 
      * @returns 
      */
-    static getValueOn<T extends object>(bean: T, fieldName: string): unknown {
-        return (bean as Bean)[fieldName];
+    static getValueOn<T extends Bean>(bean: T, fieldName: string): unknown {
+        return bean[fieldName];
+    }
+
+    /**
+     * set field value on object
+     * 
+     * @param object for operation
+     * @param fieldName to set value
+     * @param value value to set
+     */
+    static setValueOn<T extends Bean>(bean: T, fieldName: string, value: any): void {
+        (bean as Bean)[fieldName] = value;
+    }
+
+
+    /**
+     * get Bean properties
+     * 
+     * @param instance 
+     * @returns 
+     */
+    static describe<T extends Bean>(instance: T): Array<string> {
+        return Object.getOwnPropertyNames(instance);
+    }
+
+    /**
+     * string array to object as key value
+     * 
+     * @param array 
+     * @returns 
+     */
+    static toKeyValue(array: Array<string>): { [K in string]: K } {
+        return array.reduce((res: Bean, key: string) => {
+            res[key] = key;
+            return res;
+        }, Object.create(null));
+    }
+
+    /**
+     * get All Properties record on object
+     * 
+     * @param instance instance of object
+     * @returns 
+     */
+    static getPropertiesRecordOn<T extends object>(instance: T): PropertyRecord<T> {
+        return this.toKeyValue(Object.keys(instance)) as PropertyRecord<T>;
     }
 
 }
@@ -55,5 +100,3 @@ export class ObjectU {
 function exist<T>(value: T | undefined): value is NonNullable<T> {
     return value !== undefined && value !== null;
 }
-
-
